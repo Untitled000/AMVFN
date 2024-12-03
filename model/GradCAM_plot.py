@@ -1,9 +1,7 @@
 
 import torch
 import numpy as np
-import cv2
-from multi_image_model import MultiImageHybrid
-import os
+from MultiViewModel import AttentionMultiViewFusionNet
 from PIL import Image
 import matplotlib.pyplot as plt
 from torchvision import transforms
@@ -35,7 +33,7 @@ class ReshapeTransform:
 
 
 def main():
-    model = MultiImageHybrid(arch="vit_tiny_r_s16_p8_224", num_classes=2, n=2)
+    model = AttentionMultiViewFusionNet(arch="vit_tiny_r_s16_p8_224", num_classes=2, n=2)
     model.load_state_dict(torch.load("/home/wcy/Smoke_dt/multi-view-hybrid-main/output_final/exp_2/best.pth", map_location='cpu')['model'])
     # Since the final classification is done on the class token computed in the last attention block,
     # the output will not be affected by the 14x14 channels in the last layer.

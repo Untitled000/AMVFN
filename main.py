@@ -6,10 +6,11 @@ import logging
 import torch
 import torch.nn as nn
 
-from model import MultiImageHybrid
+from model.MultiViewModel import AttentionMultiViewFusionNet
 
-from loss import MutualDistillationLoss
-from engine import TrainerEngine, Evaluator
+from loss.loss import MutualDistillationLoss
+from engine.trainer import TrainerEngine
+from engine.evaluator import Evaluator
 import numpy as np
 from my_dataset import ImagePairDataset
 from utils import str2bool
@@ -28,7 +29,7 @@ def main(logger):
     loader_train = torch.utils.data.DataLoader(dataset_train, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, drop_last=False, pin_memory=True)
     loader_val = torch.utils.data.DataLoader(dataset_val, batch_size=args.batch_size, shuffle=False, num_workers=args.num_workers, drop_last=False, pin_memory=True)
     # Create a model object
-    model = MultiImageHybrid(args.architecture, num_classes=args.num_classes, n=args.n)
+    model = AttentionMultiViewFusionNet(args.architecture, num_classes=args.num_classes, n=args.n)
     model.to(args.device)
 
     print('Number of classes: ', args.num_classes)
